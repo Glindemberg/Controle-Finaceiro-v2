@@ -22,7 +22,6 @@ export function CreditCardsModal({
 }: CreditCardsModalProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [name, setName] = useState('');
-  const [lastDigits, setLastDigits] = useState('');
   const [limit, setLimit] = useState('');
   const [closingDay, setClosingDay] = useState('10');
   const [dueDay, setDueDay] = useState('20');
@@ -33,11 +32,10 @@ export function CreditCardsModal({
     
     const parsedLimit = parseFloat(limit);
     if (isNaN(parsedLimit) || parsedLimit <= 0) return;
-    if (!name.trim() || lastDigits.length !== 4) return;
+    if (!name.trim()) return;
 
     onAddCard({
       name: name.trim(),
-      lastDigits,
       limit: parsedLimit,
       closingDay: parseInt(closingDay),
       dueDay: parseInt(dueDay),
@@ -46,7 +44,6 @@ export function CreditCardsModal({
 
     // Reset form
     setName('');
-    setLastDigits('');
     setLimit('');
     setClosingDay('10');
     setDueDay('20');
@@ -99,7 +96,6 @@ export function CreditCardsModal({
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <h3 className="font-bold text-lg">{card.name}</h3>
-                      <p className="text-muted-foreground text-sm">•••• {card.lastDigits}</p>
                     </div>
                     <button
                       onClick={() => {
@@ -165,22 +161,6 @@ export function CreditCardsModal({
                   placeholder="Ex: Nubank"
                   required
                   maxLength={30}
-                  className="w-full p-4 bg-muted/50 border-0 rounded-2xl font-medium focus:ring-2 focus:ring-primary focus:bg-card transition-all outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-muted-foreground mb-2">
-                  Últimos 4 dígitos
-                </label>
-                <input
-                  type="text"
-                  value={lastDigits}
-                  onChange={(e) => setLastDigits(e.target.value.replace(/\D/g, '').slice(0, 4))}
-                  placeholder="0000"
-                  required
-                  pattern="\d{4}"
-                  maxLength={4}
                   className="w-full p-4 bg-muted/50 border-0 rounded-2xl font-medium focus:ring-2 focus:ring-primary focus:bg-card transition-all outline-none"
                 />
               </div>

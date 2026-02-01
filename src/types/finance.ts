@@ -12,6 +12,7 @@ export type Category =
   | 'educacao'
   | 'streaming'
   | 'cartao'
+  | 'vale_alimentacao'
   | 'outros';
 
 export interface Transaction {
@@ -31,7 +32,6 @@ export interface Transaction {
 export interface CreditCard {
   id: string;
   name: string;
-  lastDigits: string;
   limit: number;
   closingDay: number;
   dueDay: number;
@@ -104,8 +104,13 @@ export const CATEGORY_CONFIG: Record<Category, {
   },
   cartao: { 
     label: 'Cartão', 
-    color: 'hsl(240 60% 55%)',
+    color: 'hsl(160 70% 45%)',
     icon: 'M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z'
+  },
+  vale_alimentacao: { 
+    label: 'Vale Alimentação', 
+    color: 'hsl(25 95% 53%)',
+    icon: 'M18 7H6c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H6V9h12v6zM8 11h2v2H8zm3 0h2v2h-2zm3 0h2v2h-2z'
   },
   outros: { 
     label: 'Outros', 
