@@ -1,4 +1,5 @@
-import { ChevronLeft, ChevronRight, TrendingUp, TrendingDown, CreditCard } from 'lucide-react';
+import { ChevronLeft, ChevronRight, TrendingUp, TrendingDown, CreditCard, BarChart3 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { formatMoney, getMonthLabel } from '@/lib/formatters';
 
 interface HeaderProps {
@@ -11,6 +12,8 @@ interface HeaderProps {
 }
 
 export function Header({ viewDate, onChangeMonth, balance, income, expense, onOpenCards }: HeaderProps) {
+  const navigate = useNavigate();
+
   return (
     <>
       <header className="glass rounded-b-3xl px-6 pt-6 pb-12 relative overflow-hidden">
@@ -40,13 +43,23 @@ export function Header({ viewDate, onChangeMonth, balance, income, expense, onOp
           <h2 className="text-4xl font-bold tracking-tight mt-2">{formatMoney(balance)}</h2>
         </div>
 
-        <button
-          onClick={onOpenCards}
-          className="absolute top-6 right-6 glass w-10 h-10 rounded-xl flex items-center justify-center hover:bg-card/80 transition-all z-20"
-          title="Gerenciar Cartões"
-        >
-          <CreditCard className="w-5 h-5" />
-        </button>
+        {/* Action buttons */}
+        <div className="absolute top-6 right-6 flex gap-2 z-20">
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="glass w-10 h-10 rounded-xl flex items-center justify-center hover:bg-card/80 transition-all"
+            title="Dashboard"
+          >
+            <BarChart3 className="w-5 h-5" />
+          </button>
+          <button
+            onClick={onOpenCards}
+            className="glass w-10 h-10 rounded-xl flex items-center justify-center hover:bg-card/80 transition-all"
+            title="Gerenciar Cartões"
+          >
+            <CreditCard className="w-5 h-5" />
+          </button>
+        </div>
       </header>
 
       {/* Summary Cards */}
