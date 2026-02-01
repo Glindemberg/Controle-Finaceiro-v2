@@ -5,10 +5,11 @@ import { TransactionItem } from './TransactionItem';
 interface TransactionListProps {
   transactions: Transaction[];
   onDelete: (id: string) => void;
+  onEdit: (transaction: Transaction) => void;
   allTransactions: Transaction[];
 }
 
-export function TransactionList({ transactions, onDelete, allTransactions }: TransactionListProps) {
+export function TransactionList({ transactions, onDelete, onEdit, allTransactions }: TransactionListProps) {
   const exportCSV = () => {
     let csv = "ID,Data,Descrição,Categoria,Tipo,Valor\n";
     allTransactions.forEach(t => {
@@ -48,6 +49,7 @@ export function TransactionList({ transactions, onDelete, allTransactions }: Tra
               key={t.id} 
               transaction={t} 
               onDelete={onDelete}
+              onEdit={onEdit}
             />
           ))}
         </div>

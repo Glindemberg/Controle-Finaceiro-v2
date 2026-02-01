@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, CreditCard } from 'lucide-react';
-import { Category, CATEGORY_CONFIG, CreditCard as CreditCardType } from '@/types/finance';
+import { Category, CATEGORY_CONFIG, CreditCard as CreditCardType, Transaction } from '@/types/finance';
 import { getTodayISO } from '@/lib/formatters';
 
 interface TransactionModalProps {
@@ -16,15 +16,16 @@ interface TransactionModalProps {
     installments?: number;
   }) => void;
   creditCards: CreditCardType[];
+  editingTransaction?: Transaction | null;
 }
 
 const incomeCategories: Category[] = ['salario', 'investimento', 'outros'];
 const expenseCategories: Category[] = [
   'moradia', 'alimentacao', 'transporte', 'saude', 
-  'lazer', 'contas', 'educacao', 'streaming', 'outros'
+  'lazer', 'contas', 'educacao', 'streaming', 'vale_alimentacao', 'outros'
 ];
 
-export function TransactionModal({ isOpen, onClose, onSubmit, creditCards }: TransactionModalProps) {
+export function TransactionModal({ isOpen, onClose, onSubmit, creditCards, editingTransaction }: TransactionModalProps) {
   const [type, setType] = useState<'income' | 'expense'>('expense');
   const [amount, setAmount] = useState('');
   const [desc, setDesc] = useState('');
@@ -34,6 +35,32 @@ export function TransactionModal({ isOpen, onClose, onSubmit, creditCards }: Tra
   const [selectedCardId, setSelectedCardId] = useState('');
   const [isInstallment, setIsInstallment] = useState(false);
   const [installments, setInstallments] = useState(2);
+
+  // Populate form when editing
+  useEffect(() => {
+    if (editingTransaction) {
+      setType(editingTransaction.type);
+      setAmount(editingTransaction.amount.toString());
+      setDesc(editingTransaction.desc);
+      setCategory(editingTransaction.category);
+      setDate(editingTransaction.date);
+      setUseCard(!!editingTransaction.cardId);
+      setSelectedCardId(editingTransaction.cardId || '');
+      setIsInstallment(false);
+      setInstallments(2);
+    } else {
+      // Reset form for new transaction
+      setType('expense');
+      setAmount('');
+      setDesc('');
+      setCategory('alimentacao');
+      setDate(getTodayISO());
+      setUseCard(false);
+      setSelectedCardId('');
+      setIsInstallment(false);
+      setInstallments(2);
+    }
+  }, [editingTransaction, isOpen]);
 
   const categories = type === 'income' ? incomeCategories : expenseCategories;
 
@@ -54,15 +81,6 @@ export function TransactionModal({ isOpen, onClose, onSubmit, creditCards }: Tra
       installments: isInstallment ? installments : 1,
     });
 
-    // Reset form
-    setAmount('');
-    setDesc('');
-    setCategory('alimentacao');
-    setDate(getTodayISO());
-    setUseCard(false);
-    setSelectedCardId('');
-    setIsInstallment(false);
-    setInstallments(2);
     onClose();
   };
 
@@ -260,7 +278,7 @@ export function TransactionModal({ isOpen, onClose, onSubmit, creditCards }: Tra
             type="submit"
             className="w-full py-4 bg-primary text-primary-foreground font-bold rounded-2xl shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all active:scale-[0.98]"
           >
-            Salvar Lançamento
+            {editingTransaction ? 'Salvar Alterações' : 'Salvar Lançamento'}
           </button>
 
           <button

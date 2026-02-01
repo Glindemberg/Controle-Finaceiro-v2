@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useFinances } from '@/hooks/useFinances';
+import { Transaction } from '@/types/finance';
 import { 
   Header, 
   TransactionList, 
@@ -11,6 +12,7 @@ import {
 const Index = () => {
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
   const [isCardsModalOpen, setIsCardsModalOpen] = useState(false);
+  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
   const {
     transactions,
@@ -20,6 +22,7 @@ const Index = () => {
     changeMonth,
     getFilteredTransactions,
     addTransaction,
+    updateTransaction,
     removeTransaction,
     addCreditCard,
     removeCreditCard,
@@ -57,15 +60,39 @@ const Index = () => {
             removeTransaction(id);
           }
         }}
+        onEdit={(transaction) => {
+          setEditingTransaction(transaction);
+          setIsTransactionModalOpen(true);
+        }}
       />
 
-      <FAB onClick={() => setIsTransactionModalOpen(true)} />
+      <FAB onClick={() => {
+        setEditingTransaction(null);
+        setIsTransactionModalOpen(true);
+      }} />
 
       <TransactionModal
         isOpen={isTransactionModalOpen}
-        onClose={() => setIsTransactionModalOpen(false)}
-        onSubmit={addTransaction}
+        onClose={() => {
+          setIsTransactionModalOpen(false);
+          setEditingTransaction(null);
+        }}
+        onSubmit={(data) => {
+          if (editingTransaction) {
+            updateTransaction(editingTransaction.id, {
+              desc: data.desc,
+              amount: data.amount,
+              category: data.cardId ? 'cartao' : data.category,
+              date: data.date,
+              type: data.type,
+              cardId: data.cardId,
+            });
+          } else {
+            addTransaction(data);
+          }
+        }}
         creditCards={creditCards}
+        editingTransaction={editingTransaction}
       />
 
       <CreditCardsModal

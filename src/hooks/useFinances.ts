@@ -91,6 +91,12 @@ export function useFinances() {
     setTransactions(prev => prev.filter(t => t.id !== id));
   }, []);
 
+  const updateTransaction = useCallback((id: string, data: Partial<Omit<Transaction, 'id'>>) => {
+    setTransactions(prev => prev.map(t => 
+      t.id === id ? { ...t, ...data } : t
+    ));
+  }, []);
+
   const addCreditCard = useCallback((card: Omit<CreditCard, 'id'>) => {
     const newCard: CreditCard = {
       ...card,
@@ -162,6 +168,7 @@ export function useFinances() {
     changeMonth,
     getFilteredTransactions,
     addTransaction,
+    updateTransaction,
     removeTransaction,
     addCreditCard,
     removeCreditCard,
