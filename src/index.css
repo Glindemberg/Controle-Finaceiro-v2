@@ -8,42 +8,42 @@
   :root {
     /* Green glass theme */
     --background: 150 40% 95%;
-    --foreground: 160 70% 10%;
+    --foreground: 160 30% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 160 70% 10%;
+    --card-foreground: 160 30% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 160 70% 10%;
+    --popover-foreground: 160 30% 15%;
 
-    --primary: 160 84% 39%;
+    --primary: 160 84% 35%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 150 40% 92%;
-    --secondary-foreground: 160 70% 10%;
+    --secondary: 150 30% 90%;
+    --secondary-foreground: 160 30% 15%;
 
-    --muted: 150 20% 90%;
-    --muted-foreground: 160 20% 40%;
+    --muted: 150 15% 88%;
+    --muted-foreground: 160 25% 35%;
 
-    --accent: 150 50% 88%;
-    --accent-foreground: 160 70% 10%;
+    --accent: 150 40% 85%;
+    --accent-foreground: 160 30% 15%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 160 84% 39%;
+    --success: 160 84% 35%;
     --success-foreground: 0 0% 100%;
 
-    --border: 160 30% 80% / 0.5;
-    --input: 0 0% 100% / 0.5;
-    --ring: 160 84% 39%;
+    --border: 160 20% 75%;
+    --input: 160 15% 92%;
+    --ring: 160 84% 35%;
 
     --radius: 1rem;
 
     /* Glassmorphism - Green tinted */
-    --glass-bg: 150 30% 98% / 0.75;
-    --glass-border: 160 40% 90% / 0.6;
-    --glass-shadow: 0 8px 32px 0 rgba(16, 185, 129, 0.12);
+    --glass-bg: 0 0% 100% / 0.85;
+    --glass-border: 160 20% 85%;
+    --glass-shadow: 0 8px 32px 0 rgba(16, 100, 80, 0.1);
     --glass-blur: 12px;
 
     /* Category colors */
