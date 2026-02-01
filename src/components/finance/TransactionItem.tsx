@@ -1,13 +1,14 @@
-import { Trash2 } from 'lucide-react';
+import { Trash2, Pencil } from 'lucide-react';
 import { Transaction, CATEGORY_CONFIG } from '@/types/finance';
 import { formatMoney, formatDate } from '@/lib/formatters';
 
 interface TransactionItemProps {
   transaction: Transaction;
   onDelete: (id: string) => void;
+  onEdit: (transaction: Transaction) => void;
 }
 
-export function TransactionItem({ transaction, onDelete }: TransactionItemProps) {
+export function TransactionItem({ transaction, onDelete, onEdit }: TransactionItemProps) {
   const category = CATEGORY_CONFIG[transaction.category];
 
   return (
@@ -42,7 +43,7 @@ export function TransactionItem({ transaction, onDelete }: TransactionItemProps)
           </p>
         </div>
 
-        {/* Amount & Delete */}
+        {/* Amount & Actions */}
         <div className="text-right flex flex-col items-end gap-1">
           <span 
             className={`font-bold text-lg ${
@@ -52,12 +53,20 @@ export function TransactionItem({ transaction, onDelete }: TransactionItemProps)
             {transaction.type === 'expense' ? '- ' : '+ '}
             {formatMoney(transaction.amount)}
           </span>
-          <button
-            onClick={() => onDelete(transaction.id)}
-            className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-destructive/10 rounded-lg"
-          >
-            <Trash2 className="w-4 h-4 text-muted-foreground hover:text-destructive transition-colors" />
-          </button>
+          <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button
+              onClick={() => onEdit(transaction)}
+              className="p-1 hover:bg-primary/10 rounded-lg"
+            >
+              <Pencil className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors" />
+            </button>
+            <button
+              onClick={() => onDelete(transaction.id)}
+              className="p-1 hover:bg-destructive/10 rounded-lg"
+            >
+              <Trash2 className="w-4 h-4 text-muted-foreground hover:text-destructive transition-colors" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
