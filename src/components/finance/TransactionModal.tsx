@@ -217,7 +217,7 @@ export function TransactionModal({ isOpen, onClose, onSubmit, creditCards }: Tra
                   >
                     {creditCards.map(card => (
                       <option key={card.id} value={card.id}>
-                        {card.name} •••• {card.lastDigits}
+                        {card.name}
                       </option>
                     ))}
                   </select>
