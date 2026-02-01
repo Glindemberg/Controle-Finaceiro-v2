@@ -30,7 +30,7 @@ export function TransactionList({ transactions, onDelete, allTransactions }: Tra
         </h2>
         <button 
           onClick={exportCSV}
-          className="text-sm font-semibold text-primary flex items-center gap-1.5 hover:underline"
+          className="text-sm font-semibold text-foreground flex items-center gap-1.5 hover:underline"
         >
           <Download className="w-4 h-4" />
           Baixar CSV
